@@ -1,0 +1,65 @@
+﻿<Window x:Class="Lossless.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lossless"
+        xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1100">
+    <Grid>
+        <TabControl>
+            <TabItem Header="General">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100*"/>
+                        <RowDefinition Height="150*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button HorizontalAlignment="left" Width="287" Content="Wczytaj tekst" Click="LoadText_Click" Margin="23,156,0,26"/>
+                    <TextBox x:Name="loaded_text" HorizontalAlignment="Left" Margin="20,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="116" Width="575"/>
+                    <Button HorizontalAlignment="left" Width="272" Content="Statystyki" Click="Statistics_Click" Margin="322,156,0,24"/>
+                    <Label Content="Statystyka wystęowania poszczególnych znaków:" HorizontalAlignment="Left" Margin="616,58,0,0" VerticalAlignment="Top" Width="300"/>
+                    <TextBox x:Name="char_num" HorizontalAlignment="Left" Margin="714,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="56" RenderTransformOrigin="0,0.412"/>
+                    <Label Content="Liczba znaków:" HorizontalAlignment="Left" Margin="622,28,0,0" VerticalAlignment="Top" Width="110" Height="38"/>
+                    <Grid>
+                        <DataGrid HorizontalAlignment="Center" VerticalAlignment="Stretch" AutoGenerateColumns="False"
+                  ItemsSource="{Binding MyDictionary}" Margin="623,90,327,30">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Znak" Binding="{Binding Key}" />
+                                <DataGridTextColumn Header="Liczność" Binding="{Binding Value}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                    <DVC:Chart Grid.Row="1"  Name="mcChart" Margin="10">
+                        <DVC:Chart.Series>
+                            <DVC:ColumnSeries IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}">
+                                <DVC:ColumnSeries.DataPointStyle>
+                                    <Style TargetType="DVC:ColumnDataPoint">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="DVC:ColumnDataPoint">
+                                                    <Grid>
+                                                        <Rectangle Fill="{TemplateBinding Background}" Stroke="Black"/>
+                                                        <Grid Margin="0 -20 0 0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                                            <TextBlock Text="{TemplateBinding FormattedDependentValue}" Margin="2"/>
+                                                        </Grid>
+                                                    </Grid>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DVC:ColumnSeries.DataPointStyle>
+                            </DVC:ColumnSeries>
+                        </DVC:Chart.Series>
+                    </DVC:Chart>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Security" />
+            <TabItem Header="Details" />
+
+        </TabControl>
+
+    </Grid>
+</Window>
