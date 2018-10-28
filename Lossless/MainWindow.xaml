@@ -8,54 +8,58 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1100">
     <Grid>
-        <TabControl>
+        <TabControl x:Name="tabItems">
             <TabItem Header="General">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="150*"/>
-                    </Grid.RowDefinitions>
+                <Viewbox>
+                    <Grid Height="513">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100*"/>
+                            <RowDefinition Height="150*"/>
+                        </Grid.RowDefinitions>
 
-                    <Button HorizontalAlignment="left" Width="287" Content="Wczytaj tekst" Click="LoadText_Click" Margin="23,156,0,26"/>
-                    <TextBox x:Name="loaded_text" HorizontalAlignment="Left" Margin="20,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="116" Width="575"/>
-                    <Button HorizontalAlignment="left" Width="272" Content="Statystyki" Click="Statistics_Click" Margin="322,156,0,24"/>
-                    <Label Content="Statystyka wystęowania poszczególnych znaków:" HorizontalAlignment="Left" Margin="616,58,0,0" VerticalAlignment="Top" Width="300"/>
-                    <TextBox x:Name="char_num" HorizontalAlignment="Left" Margin="714,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="56" RenderTransformOrigin="0,0.412"/>
-                    <Label Content="Liczba znaków:" HorizontalAlignment="Left" Margin="622,28,0,0" VerticalAlignment="Top" Width="110" Height="38"/>
-                    <Grid>
-                        <DataGrid HorizontalAlignment="Center" VerticalAlignment="Stretch" AutoGenerateColumns="False"
-                  ItemsSource="{Binding MyDictionary}" Margin="623,90,327,30">
+                        
+                        <TextBox x:Name="loaded_text" HorizontalAlignment="Left" Margin="20,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="415" Width="575" Grid.RowSpan="2"/>
+                        <Button Background="LightYellow" HorizontalAlignment="left" Width="160" Content="Display diagram" Click="GenerateChart_Click" Margin="435,247,0,10" Grid.Row="1"/>
+                        <Button Background="LightBlue" HorizontalAlignment="left" Width="160" Content="Load file" Click="LoadText_Click" Margin="20,247,0,10" Grid.Row="1"/>
+                        <Button Background="LightGreen" HorizontalAlignment="left" Width="160" Content="Count characters" Click="CountAll_Click" Margin="231,247,0,10" Grid.Row="1"/>
+                        <DataGrid x:Name="charactersTable" HorizontalAlignment="Center" VerticalAlignment="Stretch" AutoGenerateColumns="False"
+                                  Margin="627,99,10,10" Width="449" Grid.RowSpan="2">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Znak" Binding="{Binding Key}" />
-                                <DataGridTextColumn Header="Liczność" Binding="{Binding Value}" />
+                                <DataGridTextColumn MinWidth="100" Header="Character" Binding="{Binding Key}" />
+                                <DataGridTextColumn MinWidth="100" Header="Sum" Binding="{Binding Value}" />
                             </DataGrid.Columns>
                         </DataGrid>
+                        <Label Content="Statystyka występowania poszczególnych znaków:" HorizontalAlignment="Left" Margin="627,68,0,0" VerticalAlignment="Top" Width="300"/>
+                        <Label Content="Liczba znaków:" HorizontalAlignment="Left" Margin="627,32,0,0" VerticalAlignment="Top" Width="110" Height="31"/>
+                        <TextBox IsReadOnly="True" x:Name="char_num" HorizontalAlignment="Left" Margin="737,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="24" Width="75" RenderTransformOrigin="0,0.412"/>
+
                     </Grid>
-                    <DVC:Chart Grid.Row="1"  Name="mcChart" Margin="10">
-                        <DVC:Chart.Series>
-                            <DVC:ColumnSeries IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}">
-                                <DVC:ColumnSeries.DataPointStyle>
-                                    <Style TargetType="DVC:ColumnDataPoint">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="DVC:ColumnDataPoint">
-                                                    <Grid>
-                                                        <Rectangle Fill="{TemplateBinding Background}" Stroke="Black"/>
-                                                        <Grid Margin="0 -20 0 0" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                                            <TextBlock Text="{TemplateBinding FormattedDependentValue}" Margin="2"/>
-                                                        </Grid>
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </DVC:ColumnSeries.DataPointStyle>
-                            </DVC:ColumnSeries>
-                        </DVC:Chart.Series>
-                    </DVC:Chart>
-                </Grid>
+                </Viewbox>
             </TabItem>
-            <TabItem Header="Security" />
+            <TabItem x:Name="ChartTabItem" Header="Chart" >
+                <DVC:Chart Grid.Row="1"  Name="mcChart" Margin="10">
+                    <DVC:Chart.Series>
+                        <DVC:ColumnSeries IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}">
+                            <DVC:ColumnSeries.DataPointStyle>
+                                <Style TargetType="DVC:ColumnDataPoint">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="DVC:ColumnDataPoint">
+                                                <Grid>
+                                                    <Rectangle Fill="{TemplateBinding Background}" Stroke="Black"/>
+                                                    <Grid Margin="0 -20 0 0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                                                        <TextBlock Text="{TemplateBinding FormattedDependentValue}" Margin="2"/>
+                                                    </Grid>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </DVC:ColumnSeries.DataPointStyle>
+                        </DVC:ColumnSeries>
+                    </DVC:Chart.Series>
+                </DVC:Chart>
+            </TabItem>
             <TabItem Header="Details" />
 
         </TabControl>

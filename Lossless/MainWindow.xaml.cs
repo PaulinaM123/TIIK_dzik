@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls.DataVisualization.Charting;
@@ -39,27 +40,23 @@ namespace Lossless
             }
         }
 
-        static int CountNonSpaceChars(String value)
-        {
-            int result = 0;
-            foreach (char c in value)
-            {
-                if (!char.IsWhiteSpace(c))
-                {
-                    result++;
-                }
-            }
-            return result;
-        }
+
 
    
-        private void Statistics_Click(object sender, RoutedEventArgs e)
+        private void GenerateChart_Click(object sender, RoutedEventArgs e)
         {
-            StringBuilder builder = new StringBuilder(loaded_text.Text);
-            char_num.Text = CountNonSpaceChars(builder.ToString()).ToString();
+            
             var x = Helpers.CountCharacters(loaded_text.Text);
             Helpers.LoadDataToColumnSeries((DataPointSeries)mcChart.Series[0], x);
-          
+            tabItems.SelectedItem = ChartTabItem;
+
+        }
+
+        private void CountAll_Click(object sender, RoutedEventArgs e)
+        {
+            char_num.Text = loaded_text.Text.Length.ToString();
+            var counted = Helpers.CountCharacters(loaded_text.Text);
+            charactersTable.ItemsSource = Helpers.ReplaceWhiteCharactersWithName(counted);
         }
     }
 }

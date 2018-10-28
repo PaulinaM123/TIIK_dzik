@@ -9,21 +9,10 @@ namespace Lossless
 {
     public static class Helpers
     {
-        static string DeleteNonChars(String value)
-        {
-            value = value.Replace("\n", String.Empty);
-            value = value.Replace("\r", String.Empty);
-            value = value.Replace("\t", String.Empty);
-            value = value.Replace(" ", String.Empty);
-
-            return value;
-        }
-
         public static Dictionary<char, int> CountCharacters(string text)
         {
             Dictionary<char, int> dict = new Dictionary<char, int>();
 
-            text = DeleteNonChars(text);
             for (int i = 0; i < text.Length; i++)
             {
                 if (dict.ContainsKey(text[i]))
@@ -38,11 +27,59 @@ namespace Lossless
             return dict;
         }
 
-        public static  void LoadDataToColumnSeries(DataPointSeries pointSeries, Dictionary<char, int> dictionary)
+        public static Dictionary<string,int> ReplaceWhiteCharactersWithName(Dictionary<char, int> dictionary)
         {
-            pointSeries.ItemsSource = dictionary.ToList().OrderBy(x => x.Key);
+            Dictionary<string, int> seriesDictionary = new Dictionary<string, int>();
+
+            foreach (var pair in dictionary)
+            {
+                if (pair.Key == ' ')
+                {
+                    seriesDictionary.Add("space", pair.Value);
+                }
+                else if (pair.Key == '\n')
+                {
+                    seriesDictionary.Add("\\n", pair.Value);
+                }
+                else if (pair.Key == '\r')
+                {
+                    seriesDictionary.Add("\\r", pair.Value);
+                }
+                else if (pair.Key == '\t')
+                {
+                    seriesDictionary.Add("\\t", pair.Value);
+                }
+                else
+                {
+                    seriesDictionary.Add(pair.Key.ToString(), pair.Value);
+                }
+            }
+
+            return seriesDictionary;
         }
 
-        
+        public static void LoadDataToColumnSeries(DataPointSeries pointSeries, Dictionary<char, int> dictionary)
+        {
+            //generowanie wykresu
+            //przepisanie słownika do nowego typu <string,int>
+            //znaki białe zostają zastąpione napisem np \n jako "nowa linia", " " jako "spacja" itd
+            var seriesDictionary = ReplaceWhiteCharactersWithName(dictionary);
+            pointSeries.ItemsSource = seriesDictionary.ToList().OrderBy(x => x.Key);
+        }
+
+        public static int CountNonSpaceChars(String value)
+        {
+            int result = 0;
+            foreach (char c in value)
+            {
+                if (!char.IsWhiteSpace(c))
+                {
+                    result++;
+                }
+            }
+            return result;
+        }
+
+
     }
 }
