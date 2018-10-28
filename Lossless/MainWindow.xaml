@@ -60,7 +60,7 @@
                     </DVC:Chart.Series>
                 </DVC:Chart>
             </TabItem>
-            <TabItem Header="Details" />
+            <TabItem Header="About" />
 
         </TabControl>
 
