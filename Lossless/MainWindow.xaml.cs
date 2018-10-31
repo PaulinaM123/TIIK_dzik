@@ -59,6 +59,7 @@ namespace Lossless
             charactersTable.ItemsSource = Helpers.ReplaceWhiteCharactersWithName(counted);
 
             entropy.Text= Helpers.Entropy(loaded_text.Text).ToString();
+            distinct_txtbox.Text = counted.Count.ToString();
         }
     }
 }
