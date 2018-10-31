@@ -57,6 +57,8 @@ namespace Lossless
             char_num.Text = loaded_text.Text.Length.ToString();
             var counted = Helpers.CountCharacters(loaded_text.Text);
             charactersTable.ItemsSource = Helpers.ReplaceWhiteCharactersWithName(counted);
+
+            entropy.Text= Helpers.Entropy(loaded_text.Text).ToString();
         }
     }
 }

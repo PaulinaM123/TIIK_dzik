@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,6 +80,58 @@ namespace Lossless
             }
             return result;
         }
+
+        public static double EntropyBuuuuu(Dictionary<char,int> dict)
+        {
+            int sum = 0;
+
+            Dictionary<char,double> probability = new Dictionary<char, double>();
+
+            foreach (var item in dict)
+            {
+                sum += item.Value;
+                probability.Add(item.Key,0.0);
+            }
+
+            foreach (var item in dict)
+            {
+                probability[item.Key] = (double)((item.Value*100) / sum);
+            }
+
+            double entropy = 0.0;
+
+            foreach (var item in probability)
+            {
+                entropy += item.Value * Math.Log(1 / item.Value, 2);
+            }
+
+            Trace.WriteLine(entropy);
+            return entropy;
+
+        }
+
+        public static double Entropy(string s)
+        {
+            var map = new Dictionary<char, int>();
+            foreach (char c in s)
+            {
+                if (!map.ContainsKey(c))
+                    map.Add(c, 1);
+                else
+                    map[c] += 1;
+            }
+
+            double result = 0.0;
+            int len = s.Length;
+            foreach (var item in map)
+            {
+                var frequency = (double)item.Value / len;
+                result -= frequency * (Math.Log(frequency) / Math.Log(2));
+            }
+
+            return result;
+        }
+
 
 
     }
