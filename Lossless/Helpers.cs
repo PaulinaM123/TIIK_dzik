@@ -59,6 +59,7 @@ namespace Lossless
             return seriesDictionary;
         }
 
+
         public static void LoadDataToColumnSeries(DataPointSeries pointSeries, Dictionary<char, int> dictionary)
         {
             //generowanie wykresu
@@ -79,35 +80,6 @@ namespace Lossless
                 }
             }
             return result;
-        }
-
-        public static double EntropyBuuuuu(Dictionary<char,int> dict)
-        {
-            int sum = 0;
-
-            Dictionary<char,double> probability = new Dictionary<char, double>();
-
-            foreach (var item in dict)
-            {
-                sum += item.Value;
-                probability.Add(item.Key,0.0);
-            }
-
-            foreach (var item in dict)
-            {
-                probability[item.Key] = (double)((item.Value*100) / sum);
-            }
-
-            double entropy = 0.0;
-
-            foreach (var item in probability)
-            {
-                entropy += item.Value * Math.Log(1 / item.Value, 2);
-            }
-
-            Trace.WriteLine(entropy);
-            return entropy;
-
         }
 
         public static double Entropy(string s)
@@ -131,8 +103,6 @@ namespace Lossless
 
             return result;
         }
-
-
 
     }
 }

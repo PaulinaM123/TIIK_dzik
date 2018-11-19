@@ -39,10 +39,7 @@ namespace Lossless
                 loaded_text.Text = ReadingFromFile(path);
             }
         }
-
-
-
-   
+        
         private void GenerateChart_Click(object sender, RoutedEventArgs e)
         {
             
