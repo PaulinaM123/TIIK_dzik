@@ -3,10 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
-        xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1100">
+        Title="Shannona-Fano compression" Height="600" Width="1100" Icon="Images/logo.ico">
     <Grid>
         <TabControl x:Name="tabItems">
             <TabItem Header="General">
@@ -16,10 +14,8 @@
                             <RowDefinition Height="100*"/>
                             <RowDefinition Height="150*"/>
                         </Grid.RowDefinitions>
-
-
                         <TextBox x:Name="loaded_text" HorizontalAlignment="Left" Margin="20,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="415" Width="575" Grid.RowSpan="2"/>
-                        <Button Background="LightYellow" HorizontalAlignment="left" Width="160" Content="Display diagram" Click="GenerateChart_Click" Margin="435,247,0,10" Grid.Row="1"/>
+                        <Button Background="LightYellow" HorizontalAlignment="left" Width="160" Content="Display diagram" Click="ShowChart" Margin="435,247,0,10" Grid.Row="1"/>
                         <Button Background="LightBlue" HorizontalAlignment="left" Width="160" Content="Load file" Click="LoadText_Click" Margin="20,247,0,10" Grid.Row="1"/>
                         <Button Background="LightGreen" HorizontalAlignment="left" Width="160" Content="Count characters" Click="CountAll_Click" Margin="231,247,0,10" Grid.Row="1"/>
                         <DataGrid x:Name="charactersTable" HorizontalAlignment="Center" VerticalAlignment="Stretch" AutoGenerateColumns="False"
@@ -39,30 +35,6 @@
                     </Grid>
                 </Viewbox>
             </TabItem>
-            <TabItem x:Name="ChartTabItem" Header="Chart" >
-                <DVC:Chart Grid.Row="1"  Name="mcChart" Margin="10">
-                    <DVC:Chart.Series>
-                        <DVC:ColumnSeries IndependentValueBinding="{Binding Path=Key}" DependentValueBinding="{Binding Path=Value}">
-                            <DVC:ColumnSeries.DataPointStyle>
-                                <Style TargetType="DVC:ColumnDataPoint">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="DVC:ColumnDataPoint">
-                                                <Grid>
-                                                    <Rectangle Fill="{TemplateBinding Background}" Stroke="Black"/>
-                                                    <Grid Margin="0 -20 0 0" HorizontalAlignment="Center" VerticalAlignment="Top">
-                                                        <TextBlock Text="{TemplateBinding FormattedDependentValue}" Margin="2"/>
-                                                    </Grid>
-                                                </Grid>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </DVC:ColumnSeries.DataPointStyle>
-                        </DVC:ColumnSeries>
-                    </DVC:Chart.Series>
-                </DVC:Chart>
-            </TabItem>
             <TabItem Header="Compression" >
                 <Viewbox>
                     <Grid Height="513" Width="1029">
@@ -79,9 +51,6 @@
                     </Grid>
                 </Viewbox>
             </TabItem>
-
-
-
         </TabControl>
     </Grid>
 </Window>

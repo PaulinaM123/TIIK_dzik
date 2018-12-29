@@ -55,7 +55,6 @@ namespace Lossless
                     seriesDictionary.Add(pair.Key.ToString(), pair.Value);
                 }
             }
-
             return seriesDictionary;
         }
 
@@ -103,6 +102,5 @@ namespace Lossless
 
             return result;
         }
-
     }
 }

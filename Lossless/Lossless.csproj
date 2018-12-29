@@ -72,9 +72,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ShanoFanoCompression.cs" />
-    <Compile Include="ShanoFanoDecompression.cs" />
-    <Compile Include="TreeNode.cs" />
+    <Compile Include="Backend\ShanoFanoCompression.cs" />
+    <Compile Include="Backend\ShanoFanoDecompression.cs" />
+    <Compile Include="Backend\TreeNode.cs" />
+    <Page Include="DiagramWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -83,7 +87,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helpers.cs" />
+    <Compile Include="Backend\Helpers.cs" />
+    <Compile Include="DiagramWindow.xaml.cs">
+      <DependentUpon>DiagramWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -120,6 +127,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\logo.ico" />
     <Content Include="packages\System.Windows.Controls.DataVisualization.Toolkit.4.0.0.0\lib\net40-Client\System.Windows.Controls.DataVisualization.Toolkit.dll" />
     <Resource Include="packages\System.Windows.Controls.DataVisualization.Toolkit.4.0.0.0\lib\net40-Client\System.Windows.Controls.DataVisualization.Toolkit.XML" />
     <Content Include="packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Input.Toolkit.dll" />

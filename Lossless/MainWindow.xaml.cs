@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls.DataVisualization.Charting;
 using Microsoft.Win32;
 
 namespace Lossless
 {
     public partial class MainWindow : Window
     {
-
         private byte[] loadedFileToCompress;
         private byte[] loadedFileToDecompress;
         private byte[] compressed;
         private byte[] decompressed;
+        DiagramWindow diagramWindow;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -46,15 +44,6 @@ namespace Lossless
             }
         }
         
-        private void GenerateChart_Click(object sender, RoutedEventArgs e)
-        {
-            
-            var x = Helpers.CountCharacters(loaded_text.Text);
-            Helpers.LoadDataToColumnSeries((DataPointSeries)mcChart.Series[0], x);
-            tabItems.SelectedItem = ChartTabItem;
-
-        }
-
         private void CountAll_Click(object sender, RoutedEventArgs e)
         {
             char_num.Text = loaded_text.Text.Length.ToString();
@@ -74,8 +63,7 @@ namespace Lossless
                 loadedFileToCompress = File.ReadAllBytes(fileDialog.FileName);
                 FileName_label.Content = "File name: "+fileDialog.SafeFileName;
                 FileSize_label.Content = "File size: "+loadedFileToCompress.Length;
-            }
-            
+            }     
         }
 
         private void Compress_btn_Click(object sender, RoutedEventArgs e)
@@ -111,7 +99,6 @@ namespace Lossless
                 FileNameDcmps_label.Content = "File name: " + fileDialog.SafeFileName;
                 FileSizeDcmps_label.Content = "File size: " + loadedFileToCompress.Length;
             }
-
         }
 
         private void Decompress_btn_Click(object sender, RoutedEventArgs e)
@@ -122,6 +109,12 @@ namespace Lossless
             ShanoFanoDecompression.Decompress(compressed, decompressedData, (uint)compressed.Length, originalDataSize);
 
             compressedFileSize_label.Content = "Decompressed file size: " + decompressedData.Length;
+        }
+
+        public void ShowChart(object sender, RoutedEventArgs e)
+        {
+            diagramWindow = new DiagramWindow(loaded_text.Text);
+            diagramWindow.Show();
         }
     }
 }
