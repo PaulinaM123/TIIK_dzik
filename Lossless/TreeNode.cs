@@ -8,7 +8,16 @@ namespace Lossless
 {
     class TreeNode
     {
-        public TreeNode Parent;
-        public IList<TreeNode> Children;
+        public TreeNode Parent { get; set; }
+        public IList<TreeNode> Children { get; set; }
+        public Dictionary<char,int> Data { get; set; }
+        public byte BinaryCode { get; set; }
+
+
+        public TreeNode()
+        {
+            Data = new Dictionary<char, int>();
+        }
+
     }
 }

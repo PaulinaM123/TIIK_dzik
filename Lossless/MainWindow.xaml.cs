@@ -5,11 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls.DataVisualization.Charting;
+using Microsoft.Win32;
 
 namespace Lossless
 {
     public partial class MainWindow : Window
     {
+
+        private byte[] loadedFileToCompress;
+        private byte[] loadedFileToDecompress;
+        private byte[] compressed;
+        private byte[] decompressed;
         public MainWindow()
         {
             InitializeComponent();
@@ -57,6 +63,65 @@ namespace Lossless
 
             entropy.Text= Helpers.Entropy(loaded_text.Text).ToString();
             distinct_txtbox.Text = counted.Count.ToString();
+        }
+
+        private void LoadFile_btn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+
+            if (fileDialog.ShowDialog()==true)
+            {
+                loadedFileToCompress = File.ReadAllBytes(fileDialog.FileName);
+                FileName_label.Content = "File name: "+fileDialog.SafeFileName;
+                FileSize_label.Content = "File size: "+loadedFileToCompress.Length;
+            }
+            
+        }
+
+        private void Compress_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (loadedFileToCompress == null)
+            {
+                MessageBox.Show("No file loaded!");
+            }
+            
+            byte[] originalData = loadedFileToCompress;
+            uint originalDataSize = (uint)loadedFileToCompress.Length;
+            byte[] compressedData = new byte[originalDataSize * (101 / 100) + 384];
+
+            compressed = compressedData;
+            int compressedSize = ShanoFanoCompression.Compress(originalData, compressedData, originalDataSize);
+
+            compressedFileSize_label.Content = "Compressed file size: " + compressedSize;
+
+            SaveFileDialog fileDialog = new SaveFileDialog();
+            if (fileDialog.ShowDialog() == true)
+            {
+                File.WriteAllBytes(fileDialog.FileName,compressedData);
+            }
+        }
+
+        private void LoadFileDecompress_btn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+
+            if (fileDialog.ShowDialog() == true)
+            {
+                loadedFileToDecompress = File.ReadAllBytes(fileDialog.FileName);
+                FileNameDcmps_label.Content = "File name: " + fileDialog.SafeFileName;
+                FileSizeDcmps_label.Content = "File size: " + loadedFileToCompress.Length;
+            }
+
+        }
+
+        private void Decompress_btn_Click(object sender, RoutedEventArgs e)
+        {
+            uint originalDataSize = (uint)loadedFileToDecompress.Length;
+            byte[] decompressedData = new byte[loadedFileToDecompress.Length];
+
+            ShanoFanoDecompression.Decompress(compressed, decompressedData, (uint)compressed.Length, originalDataSize);
+
+            compressedFileSize_label.Content = "Decompressed file size: " + decompressedData.Length;
         }
     }
 }

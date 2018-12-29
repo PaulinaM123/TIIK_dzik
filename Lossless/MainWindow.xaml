@@ -63,9 +63,25 @@
                     </DVC:Chart.Series>
                 </DVC:Chart>
             </TabItem>
-            <TabItem Header="Compression" />
+            <TabItem Header="Compression" >
+                <Viewbox>
+                    <Grid Height="513" Width="1029">
+                        <Button x:Name="LoadFile_btn" Content="Load file to compress" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" Margin="10,10,0,0" Height="54" Click="LoadFile_btn_Click"/>
+                        <Label x:Name="FileName_label" Content="File name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="189,10,0,0" Width="225"/>
+                        <Label x:Name="FileSize_label" Content="File size: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="189,38,0,0" Width="225"/>
+                        <Button x:Name="Compress_btn" Content="Compress" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" Margin="10,94,0,0" Height="54" Click="Compress_btn_Click"/>
+                        <Label x:Name="compressedFileSize_label" Content="Compressed file size: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="189,94,0,0" Width="225"/>
+                        <Button x:Name="Decompress_btn" Content="Decompress" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" Margin="10,267,0,0" Height="54" Click="Decompress_btn_Click"/>
+                        <Label x:Name="decompressedFileSize_label" Content="Decompressed file size:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="189,267,0,0" Width="225"/>
+                        <Button x:Name="LoadFileDecompress_btn" Content="Load file to decompress" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" Margin="10,188,0,0" Height="54" Click="LoadFileDecompress_btn_Click"/>
+                        <Label x:Name="FileNameDcmps_label" Content="File name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="189,188,0,0" Width="225"/>
+                        <Label x:Name="FileSizeDcmps_label" Content="File size: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="189,216,0,0" Width="225"/>
+                    </Grid>
+                </Viewbox>
+            </TabItem>
+
+
 
         </TabControl>
-
     </Grid>
 </Window>

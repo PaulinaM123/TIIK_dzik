@@ -72,7 +72,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ShannonFanoEncoding.cs" />
+    <Compile Include="ShanoFanoCompression.cs" />
+    <Compile Include="ShanoFanoDecompression.cs" />
     <Compile Include="TreeNode.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
