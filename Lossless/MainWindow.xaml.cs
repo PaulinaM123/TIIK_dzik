@@ -21,26 +21,19 @@ namespace Lossless
 
         static String ReadingFromFile(String path)
         {
-            string s = File.ReadAllText(path, Encoding.Default);
-            return s;
+            return File.ReadAllText(path, Encoding.Default);
         }
 
         private void LoadText_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.FileName = "Document"; // Default file name
-            dlg.DefaultExt = ".txt"; // Default file extension
-            dlg.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.FileName = "Document"; 
+            dlg.DefaultExt = ".txt"; 
+            dlg.Filter = "Text documents (.txt)|*.txt"; 
 
-            // Show open file dialog box
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Process open file dialog box results
-            if (result == true)
+            if (dlg.ShowDialog() == true)
             {
-                // Open document
-                string path = dlg.FileName;
-                loaded_text.Text = ReadingFromFile(path);
+                loaded_text.Text = ReadingFromFile(dlg.FileName);
             }
         }
         
@@ -116,5 +109,15 @@ namespace Lossless
             diagramWindow = new DiagramWindow(loaded_text.Text);
             diagramWindow.Show();
         }
+
+        //private void SearchCollisionLoading(int counter, int max)
+        //{
+        //    Dispatcher.Invoke(() =>
+        //    {
+        //        var percents = ((counter * 100) / max);
+        //        findCollisionLoading.Value = percents;
+        //        findCollisionLabel.Content = percents + "% " + searchedFiles + "/" + filesToSearchCollision;
+        //    });
+        //}
     }
 }
