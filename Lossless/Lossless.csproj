@@ -128,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\logo.ico" />
+    <Resource Include="Images\file.png" />
     <Content Include="packages\System.Windows.Controls.DataVisualization.Toolkit.4.0.0.0\lib\net40-Client\System.Windows.Controls.DataVisualization.Toolkit.dll" />
     <Resource Include="packages\System.Windows.Controls.DataVisualization.Toolkit.4.0.0.0\lib\net40-Client\System.Windows.Controls.DataVisualization.Toolkit.XML" />
     <Content Include="packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Input.Toolkit.dll" />

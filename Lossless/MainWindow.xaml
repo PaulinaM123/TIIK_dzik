@@ -8,47 +8,107 @@
     <Grid>
         <TabControl x:Name="tabItems">
             <TabItem Header="General">
-                <Viewbox>
-                    <Grid Height="513">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="100*"/>
-                            <RowDefinition Height="150*"/>
-                        </Grid.RowDefinitions>
-                        <TextBox x:Name="loaded_text" HorizontalAlignment="Left" Margin="20,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="415" Width="575" Grid.RowSpan="2"/>
-                        <Button Background="LightYellow" HorizontalAlignment="left" Width="160" Content="Display diagram" Click="ShowChart" Margin="435,247,0,10" Grid.Row="1"/>
-                        <Button Background="LightBlue" HorizontalAlignment="left" Width="160" Content="Load file" Click="LoadText_Click" Margin="20,247,0,10" Grid.Row="1"/>
-                        <Button Background="LightGreen" HorizontalAlignment="left" Width="160" Content="Count characters" Click="CountAll_Click" Margin="231,247,0,10" Grid.Row="1"/>
-                        <DataGrid x:Name="charactersTable" HorizontalAlignment="Center" VerticalAlignment="Stretch" AutoGenerateColumns="False"
-                                  Margin="627,99,10,10" Width="449" Grid.RowSpan="2">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn MinWidth="100" Header="Character" Binding="{Binding Key}" />
-                                <DataGridTextColumn MinWidth="100" Header="Sum" Binding="{Binding Value}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <Label Content="Statistics table" HorizontalAlignment="Left" Margin="627,68,0,0" VerticalAlignment="Top" Width="300"/>
-                        <Label Content="Total characters" HorizontalAlignment="Left" Margin="627,32,0,0" VerticalAlignment="Top" Width="110" Height="31"/>
-                        <Label Content="Entropy" HorizontalAlignment="Left" Margin="817,32,0,0" VerticalAlignment="Top" Width="110" Height="31"/>
-                        <TextBox IsReadOnly="True" x:Name="char_num" HorizontalAlignment="Left" Margin="727,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="24" Width="85" RenderTransformOrigin="0,0.412"/>
-                        <TextBox IsReadOnly="True" x:Name="entropy" HorizontalAlignment="Left" Margin="898,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="24" Width="178" RenderTransformOrigin="0,0.412"/>
-                        <TextBox IsReadOnly="True" x:Name="distinct_txtbox" HorizontalAlignment="Left" Margin="927,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="24" Width="149" RenderTransformOrigin="0,0.412"/>
-                        <Label Content="Unique characters" HorizontalAlignment="Left" Margin="817,68,0,0" VerticalAlignment="Top" Width="110" Height="31"/>
-                    </Grid>
+                <Viewbox Stretch="Fill">
+                    <StackPanel Height="513" Orientation="Horizontal">
+                        <StackPanel HorizontalAlignment="Left" Width='600'>
+                            <StackPanel>
+                                <DockPanel x:Name="LeftHeader">
+                                    <Label Content="Input text" HorizontalAlignment="Left" FontSize="16"/>
+                                    <Button Margin="0,15,0,5" Background="LightBlue" HorizontalAlignment="Right"  Click="LoadText_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="Images/file.png" Height="30" Width="30">
+
+                                            </Image>
+                                            <Label VerticalContentAlignment="Center" FontSize="16">
+                                                Load File
+                                            </Label>
+                                        </StackPanel>
+                                    </Button>
+                                </DockPanel>
+                                <TextBox x:Name="loaded_text" TextWrapping="Wrap" Height="350" />
+                            </StackPanel>
+                            <DockPanel x:Name="SettingsDockPanel">
+                                <StackPanel Width="350" HorizontalAlignment="left">
+                                    <DockPanel Margin="2">
+                                        <Label Content="Unique characters" FontSize="16" HorizontalAlignment="Left" Width="140"/>
+                                        <TextBox VerticalContentAlignment="Center" FontSize="16" IsReadOnly="True" x:Name="distinct_txtbox"  />
+                                    </DockPanel>
+                                    <DockPanel Margin="2">
+                                        <Label Content="Total characters" FontSize="16"  HorizontalAlignment="Left" Width="140"/>
+                                        <TextBox VerticalContentAlignment="Center" FontSize="16" IsReadOnly="True" x:Name="char_num"  />
+                                    </DockPanel>
+                                    <DockPanel Margin="2">
+                                        <Label Content="Entropy" FontSize="16"  HorizontalAlignment="Left"  Width="140"/>
+                                        <TextBox VerticalContentAlignment="Center" FontSize="16" IsReadOnly="True" x:Name="entropy" />
+                                    </DockPanel>
+                                </StackPanel>
+                                <StackPanel>
+                                    <Button Background="LightGreen" Margin="2,10,0,4" HorizontalAlignment="Center" Height="40" Width="200" Content="Count characters" Click="CountAll_Click">
+                                        <Button.FontSize>
+                                            16
+                                        </Button.FontSize>
+                                    </Button>
+                                    <Button Background="LightYellow"  Margin="2" Height="40" Width="200"  FontSize="16" Content="Display diagram" Click="ShowChart"/>
+                                </StackPanel>
+                            </DockPanel>
+                        </StackPanel>
+                        <StackPanel Width="500" Margin="10,0,0,0" x:Name="RightStackPanel">
+                            <StackPanel >
+                                <Label Content="Statistics table"  HorizontalAlignment="Left" FontSize="16" Height="{Binding ActualHeight, ElementName=LeftHeader}" />
+                                <DataGrid x:Name="charactersTable" HorizontalAlignment="Left" AutoGenerateColumns="False" Width="{Binding ActualWidth, ElementName=RightStackPanel}" Height="452">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn MinWidth="100" Header="Character" Binding="{Binding Key}" />
+                                        <DataGridTextColumn MinWidth="100" Header="Sum" Binding="{Binding Value}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
                 </Viewbox>
             </TabItem>
             <TabItem Header="Compression" >
-                <Viewbox>
-                    <Grid Height="513" Width="1029">
-                        <Button x:Name="LoadFile_btn" Content="Load file to compress" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" Margin="10,10,0,0" Height="54" Click="LoadFile_btn_Click"/>
-                        <Label x:Name="FileName_label" Content="File name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="189,10,0,0" Width="225"/>
-                        <Label x:Name="FileSize_label" Content="File size: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="189,38,0,0" Width="225"/>
-                        <Button x:Name="Compress_btn" Content="Compress" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" Margin="10,94,0,0" Height="54" Click="Compress_btn_Click"/>
-                        <Label x:Name="compressedFileSize_label" Content="Compressed file size: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="189,94,0,0" Width="225"/>
-                        <Button x:Name="Decompress_btn" Content="Decompress" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" Margin="10,267,0,0" Height="54" Click="Decompress_btn_Click"/>
-                        <Label x:Name="decompressedFileSize_label" Content="Decompressed file size:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="189,267,0,0" Width="225"/>
-                        <Button x:Name="LoadFileDecompress_btn" Content="Load file to decompress" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" Margin="10,188,0,0" Height="54" Click="LoadFileDecompress_btn_Click"/>
-                        <Label x:Name="FileNameDcmps_label" Content="File name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="189,188,0,0" Width="225"/>
-                        <Label x:Name="FileSizeDcmps_label" Content="File size: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="189,216,0,0" Width="225"/>
-                    </Grid>
+                <Viewbox Stretch="Fill">
+                    <StackPanel Height="513" Orientation="Horizontal">
+                        <StackPanel HorizontalAlignment="Left" Width='600'>
+                            <Button Margin="0,15,0,5" Background="LightBlue" HorizontalAlignment="Right"  Click="LoadText_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="Images/file.png" Height="30" Width="30">
+
+                                    </Image>
+                                    <Label VerticalContentAlignment="Center" FontSize="16">
+                                        Load File
+                                    </Label>
+                                </StackPanel>
+                            </Button>
+                            <DockPanel>
+                                <Button x:Name="LoadFile_btn" Content="Load file to compress"  Click="LoadFile_btn_Click"/>
+                                <Label x:Name="FileName_label" Content="File name:" />
+                                <Label x:Name="FileSize_label" Content="File size: "/>
+                            </DockPanel>
+                            <DockPanel>
+                                <Button x:Name="Compress_btn" Content="Compress"   Click="Compress_btn_Click"/>
+                                <Label x:Name="compressedFileSize_label" Content="Compressed file size: " />
+                            </DockPanel>
+                            <DockPanel>
+                                <Button x:Name="Decompress_btn" Content="Decompress" Click="Decompress_btn_Click"/>
+                                <Label x:Name="decompressedFileSize_label" Content="Decompressed file size:"  />
+                            </DockPanel>
+                            <DockPanel>
+                                <Button x:Name="LoadFileDecompress_btn" Content="Load file to decompress" Click="LoadFileDecompress_btn_Click"/>
+                                <Label x:Name="FileNameDcmps_label" Content="File name:" />
+                            </DockPanel>
+                        </StackPanel>
+                        <StackPanel Width="500">
+                            <StackPanel>
+                                <DockPanel >
+                                    <Label Content="Decompressio" HorizontalAlignment="Center" FontSize="16"/>
+                                </DockPanel>
+                                <DockPanel >
+                                    <Label Content="Compression" HorizontalAlignment="Center" FontSize="16"/>
+                                </DockPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
                 </Viewbox>
             </TabItem>
         </TabControl>
