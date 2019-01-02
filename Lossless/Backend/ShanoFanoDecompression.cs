@@ -1,29 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Lossless.Backend;
+using System;
 
 namespace Lossless
 {
     class ShanoFanoDecompression
     {
+        public delegate void UpdateStep(uint counter, uint max);
+        public delegate void CompleteStep();
+        public event UpdateStep UpdateEvent;
+        public event CompleteStep CompleteEvent;
+
+
         private const int MAX_TREE_NODES = 511;
-
-        public class BitStream
-        {
-            public byte[] BytePointer;
-            public uint BitPosition;
-            public uint Index;
-        }
-
-        public struct Symbol
-        {
-            public uint Sym;
-            public uint Count;
-            public uint Code;
-            public uint Bits;
-        }
 
         public class TreeNode
         {
@@ -32,13 +20,13 @@ namespace Lossless
             public int Symbol;
         }
 
-        private static void initBitStream(ref BitStream stream, byte[] buffer)
+        private  void initBitStream(ref BitStream stream, byte[] buffer)
         {
             stream.BytePointer = buffer;
             stream.BitPosition = 0;
         }
 
-        private static uint readBit(ref BitStream stream)
+        private  uint readBit(ref BitStream stream)
         {
             byte[] buffer = stream.BytePointer;
             uint bit = stream.BitPosition;
@@ -55,7 +43,7 @@ namespace Lossless
             return x;
         }
 
-        private static uint read8Bits(ref BitStream stream)
+        private  uint read8Bits(ref BitStream stream)
         {
             byte[] buffer = stream.BytePointer;
             uint bit = stream.BitPosition;
@@ -65,7 +53,7 @@ namespace Lossless
             return x;
         }
 
-        private static TreeNode recoverTree(TreeNode[] nodes, ref BitStream stream, ref uint nodeNumber)
+        private  TreeNode recoverTree(TreeNode[] nodes, ref BitStream stream, ref uint nodeNumber)
         {
             TreeNode thisNode;
 
@@ -95,7 +83,7 @@ namespace Lossless
             return thisNode;
         }
 
-        public static void Decompress(byte[] input, byte[] output, uint inputSize, uint outputSize)
+        public  void Decompress(byte[] input, byte[] output, uint inputSize, uint outputSize)
         {
             TreeNode[] nodes = new TreeNode[MAX_TREE_NODES];
 
@@ -127,6 +115,21 @@ namespace Lossless
                         node = node.ChildB;
                     else
                         node = node.ChildA;
+                }
+
+                if (i % (outputSize / 100) == 0)
+                {
+                    if (UpdateEvent != null)
+                    {
+                        UpdateEvent.Invoke(i, inputSize);
+                    }
+                }
+                else if (i == outputSize - 1)
+                {
+                    if (CompleteEvent != null)
+                    {
+                        CompleteEvent.Invoke();
+                    }
                 }
 
                 buffer[i] = (byte)node.Symbol;

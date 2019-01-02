@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Lossless
 {
@@ -12,12 +8,9 @@ namespace Lossless
         public IList<TreeNode> Children { get; set; }
         public Dictionary<char,int> Data { get; set; }
         public byte BinaryCode { get; set; }
-
-
         public TreeNode()
         {
             Data = new Dictionary<char, int>();
         }
-
     }
 }

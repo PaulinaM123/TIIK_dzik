@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Shannona-Fano compression" Height="600" Width="1100" Icon="Images/logo.ico">
+        Title="Shannona-Fano compression" Height="600" Width="1100" Icon="Images/logo.ico" >
+    
     <Grid>
         <TabControl x:Name="tabItems">
             <TabItem Header="General">
@@ -14,7 +15,7 @@
                             <StackPanel>
                                 <DockPanel x:Name="LeftHeader">
                                     <Label Content="Input text" HorizontalAlignment="Left" FontSize="16"/>
-                                    <Button Margin="0,15,0,5" Background="LightBlue" HorizontalAlignment="Right"  Click="LoadText_Click">
+                                    <Button Margin="0,15,0,5" Background="LightBlue" HorizontalAlignment="Right"  Click="LoadFileStatisticView">
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="Images/file.png" Height="30" Width="30">
 
@@ -43,7 +44,7 @@
                                     </DockPanel>
                                 </StackPanel>
                                 <StackPanel>
-                                    <Button Background="LightGreen" Margin="2,10,0,4" HorizontalAlignment="Center" Height="40" Width="200" Content="Count characters" Click="CountAll_Click">
+                                    <Button Background="LightGreen" Margin="2,10,0,4" HorizontalAlignment="Center" Height="40" Width="200" Content="Count characters" Click="CountCharactersStatisticView">
                                         <Button.FontSize>
                                             16
                                         </Button.FontSize>
@@ -69,61 +70,188 @@
             <TabItem Header="Compression" >
                 <Viewbox Stretch="Fill">
                     <StackPanel Height="513" Orientation="Horizontal">
-                        <StackPanel HorizontalAlignment="Left" Width='600'>
+                        <StackPanel HorizontalAlignment="Left" Width='550'>
                             <DockPanel >
-                                <Label Content="Compression" HorizontalAlignment="Center" FontSize="16"/>
+                                <Label Content="Compression" HorizontalAlignment="Center" FontSize="20"/>
                             </DockPanel>
-                            <Button Margin="0,15,0,5" Background="LightBlue" HorizontalAlignment="Right"  Click="LoadFile_btn_Click">
+                            <Button Margin="0,15,0,5" Background="LightBlue" HorizontalAlignment="Right"  Click="LoadFileToCompress">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Source="Images/file.png" Height="30" Width="30">
 
                                     </Image>
                                     <Label VerticalContentAlignment="Center" FontSize="16">
-                                        Load File
+                                        Load File To Compress:
                                     </Label>
                                 </StackPanel>
                             </Button>
-                            <Grid>
-                                <ProgressBar Minimum="0" Maximum="100" x:Name="CompressionProgressBar"/>
+                            <Label>
+                                Loaded file to compress
+                            </Label>
+                            <DockPanel>
+                                <ListBox x:Name="FilesToCompress" Height="80" Width="400" >
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" >
+                                                <StackPanel>
+                                                    <Label>
+                                                        nazwa pliku:
+                                                    </Label>
+                                                    <Label Content="{Binding Name}" VerticalAlignment="Center" FontSize="16"/>
+                                                </StackPanel>
+                                                <StackPanel>
+                                                    <Label>
+                                                        rozmiar pliku:
+                                                    </Label>
+                                                    <Label Content="{Binding Size}" VerticalAlignment="Center" FontSize="16"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <Button x:Name="Compress_btn" Margin="10" Content="Compress" Click="CompressFile" Background="LightGreen">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasItems, ElementName=FilesToCompress, UpdateSourceTrigger=PropertyChanged}" Value="False">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </DockPanel>
+
+                            <Grid Margin="0,30,0,30">
+                                <ProgressBar  Minimum="0" Maximum="100" x:Name="CompressionProgressBar"/>
                                 <Label HorizontalAlignment="Center" x:Name="CompressionProgressBarLabel" Content="0%"  />
                             </Grid>
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" >
+                                    <Label FontSize="16" Width="200">
+                                        File size before compression:
+                                    </Label>
+                                    <Label x:Name="c_SizeBeforeCompression" FontSize="16" >
 
-                            <DockPanel>
-                                <Label x:Name="FileName_label" Content="File name:" />
-                                <Label x:Name="FileSize_label" Content="File size: "/>
-                            </DockPanel>
-                            <DockPanel>
-                                <Button x:Name="Compress_btn" Content="Compress"   Click="Compress_btn_Click"/>
-                                <Label x:Name="compressedFileSize_label" Content="Compressed file size: " />
-                            </DockPanel>
-                            <DockPanel>
-                                <Button x:Name="Decompress_btn" Content="Decompress" Click="Decompress_btn_Click"/>
-                                <Label x:Name="decompressedFileSize_label" Content="Decompressed file size:"  />
-                            </DockPanel>
-                            <DockPanel>
-                                <Label x:Name="FileNameDcmps_label" Content="File name:" />
-                                <Label x:Name="FileSizeDcmps_label" Content="File Size:" />
-                            </DockPanel>
+                                    </Label>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label FontSize="16" Width="200">
+                                        File size after compression:
+                                    </Label>
+                                    <Label x:Name="c_SizeAfterCompression" FontSize="16">
+                                        
+                                    </Label>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label FontSize="16" Width="200">
+                                        Degree of compression:
+                                    </Label>
+                                    <Label x:Name="c_CompressionDegree" FontSize="16">
+                                        
+                                    </Label>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label FontSize="16" Width="200">
+                                        Compression Time
+                                    </Label>
+                                    <Label x:Name="c_CompressionTime" FontSize="16">
+                                       
+                                    </Label>
+                                </StackPanel>
+                            </StackPanel>
+                          
+                            <Button Margin="0,30,0,0" Background="LightYellow"  Height="40" Width="200"  FontSize="16" Content="Save compressed file" Click="SaveCompressedFile"/>
                         </StackPanel>
-                        <StackPanel Width="500">
+                        <StackPanel Width="550" Margin="10,0,0,0">
                             <StackPanel>
                                 <DockPanel >
-                                    <Label Content="Decompression" HorizontalAlignment="Center" FontSize="16"/>
+                                    <Label Content="Decompression" HorizontalAlignment="Center" FontSize="20"/>
                                 </DockPanel>
-                                <Button Margin="0,15,0,5" Background="LightBlue" HorizontalAlignment="Right"  Click="LoadFileDecompress_btn_Click">
+                                <Button Margin="0,15,0,5" Background="LightBlue" HorizontalAlignment="Right"  Click="LoadFileToDecompress">
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="Images/file.png" Height="30" Width="30">
 
                                         </Image>
                                         <Label VerticalContentAlignment="Center" FontSize="16">
-                                            Load File
+                                            Load File To Decompress
                                         </Label>
                                     </StackPanel>
                                 </Button>
-                                <Grid>
+                                <Label>
+                                    Loaded file to decompress:
+                                </Label>
+                                <DockPanel>
+                                    <ListBox x:Name="FilesToDecompress" Height="80" Width="400">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" >
+                                                    <StackPanel>
+                                                        <Label>
+                                                            nazwa pliku:
+                                                        </Label>
+                                                        <Label Content="{Binding Name}" VerticalAlignment="Center" FontSize="16"/>
+                                                    </StackPanel>
+                                                    <StackPanel>
+                                                        <Label>
+                                                            rozmiar pliku:
+                                                        </Label>
+                                                        <Label Content="{Binding Size}" VerticalAlignment="Center" FontSize="16"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <Button x:Name="Decompress_btn" Margin="10" Content="Decompress" Click="DecompressFile" Background="LightGreen">
+                                        <Button.Style>
+                                            <Style TargetType="{x:Type Button}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding HasItems, ElementName=FilesToDecompress, UpdateSourceTrigger=PropertyChanged}" Value="False">
+                                                        <Setter Property="IsEnabled" Value="False"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </DockPanel>
+                                <Grid Margin="0,30,0,30">
                                     <ProgressBar Minimum="0" Maximum="100" x:Name="DecompressionProgressBar"/>
                                     <Label HorizontalAlignment="Center" x:Name="DecompressionProgressBarLabel" Content="0%"  />
                                 </Grid>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" >
+                                        <Label FontSize="16" Width="200">
+                                            File size before decompression:
+                                        </Label>
+                                        <Label x:Name="d_SizeBeforeDecompression" FontSize="16" >
+
+                                        </Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label FontSize="16" Width="200">
+                                            File size after decompression:
+                                        </Label>
+                                        <Label x:Name="d_SizeAfterDecompression" FontSize="16">
+
+                                        </Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label FontSize="16" Width="200">
+                                            Degree of decompression:
+                                        </Label>
+                                        <Label x:Name="d_DecompressionDegree" FontSize="16">
+
+                                        </Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label FontSize="16" Width="200">
+                                            Decompression Time
+                                        </Label>
+                                        <Label x:Name="d_DecompressionTime" FontSize="16">
+
+                                        </Label>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Button Margin="0,30,0,0" Background="LightYellow" Height="40" Width="200"  FontSize="16" Content="Save decompressed file" Click="SaveDecompressedFile"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

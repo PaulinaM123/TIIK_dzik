@@ -1,35 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Lossless.Backend;
+using System;
 
 namespace Lossless
 {
     class ShanoFanoCompression
     {
-        public class BitStream
-        {
-            public byte[] BytePointer;
-            public uint BitPosition;
-            public uint Index;
-        }
+        public delegate void UpdateStep(uint counter, uint max);
+        public delegate void CompleteStep();
+        public event UpdateStep UpdateEvent;
+        public event CompleteStep CompleteEvent;
 
-        public struct Symbol
-        {
-            public uint Sym;
-            public uint Count;
-            public uint Code;
-            public uint Bits;
-        }
-
-        private static void initBitStream(ref BitStream stream, byte[] buffer)
+        private  void initBitStream(ref BitStream stream, byte[] buffer)
         {
             stream.BytePointer = buffer;
             stream.BitPosition = 0;
         }
 
-        private static void writeBits(ref BitStream stream, uint x, uint bits)
+        private  void writeBits(ref BitStream stream, uint x, uint bits)
         {
             byte[] buffer = stream.BytePointer;
             uint bit = stream.BitPosition;
@@ -51,7 +38,7 @@ namespace Lossless
             stream.BitPosition = bit;
         }
 
-        private static void histogram(byte[] input, Symbol[] sym, uint size)
+        private  void histogram(byte[] input, Symbol[] sym, uint size)
         {
             Symbol temp;
             int i, swaps;
@@ -87,7 +74,7 @@ namespace Lossless
             } while (Convert.ToBoolean(swaps));
         }
 
-        private static void makeTree(Symbol[] sym, ref BitStream stream, uint code, uint bits, uint first, uint last)
+        private  void makeTree(Symbol[] sym, ref BitStream stream, uint code, uint bits, uint first, uint last)
         {
             uint i, size, sizeA, sizeB, lastA, firstB;
 
@@ -147,7 +134,7 @@ namespace Lossless
             }
         }
 
-        public static int Compress(byte[] input, byte[] output, uint inputSize)
+        public  int Compress(byte[] input, byte[] output, uint inputSize)
         {
             Symbol[] sym = new Symbol[256];
             Symbol temp;
@@ -187,6 +174,21 @@ namespace Lossless
             {
                 symbol = input[i];
                 writeBits(ref stream, sym[symbol].Code, sym[symbol].Bits);
+
+                if (i % (inputSize / 100) == 0)
+                {
+                    if (UpdateEvent != null)
+                    {
+                        UpdateEvent.Invoke(i, inputSize);
+                    }
+                }
+                else if(i == inputSize-1)
+                {
+                    if (CompleteEvent != null)
+                    {
+                        CompleteEvent.Invoke();
+                    }
+                }   
             }
 
             totalBytes = stream.Index;
