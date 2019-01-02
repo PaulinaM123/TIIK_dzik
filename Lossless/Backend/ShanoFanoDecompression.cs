@@ -124,15 +124,12 @@ namespace Lossless
                         UpdateEvent.Invoke(i, inputSize);
                     }
                 }
-                else if (i == outputSize - 1)
-                {
-                    if (CompleteEvent != null)
-                    {
-                        CompleteEvent.Invoke();
-                    }
-                }
 
                 buffer[i] = (byte)node.Symbol;
+            }
+            if (CompleteEvent != null)
+            {
+                CompleteEvent.Invoke();
             }
         }
     }

@@ -202,6 +202,7 @@ namespace Lossless
             {
                 CompressionProgressBar.Value = 100.0;
                 CompressionProgressBarLabel.Content = 100 + "% ";
+                SaveFileCompress.IsEnabled = true;
             });
         }
 
@@ -221,6 +222,7 @@ namespace Lossless
             {
                 DecompressionProgressBar.Value = 100.0;
                 DecompressionProgressBarLabel.Content = 100 + "% ";
+                SaveFileDecompress.IsEnabled = true;
             });
         }
 

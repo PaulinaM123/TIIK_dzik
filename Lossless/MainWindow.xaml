@@ -159,8 +159,8 @@
                                     </Label>
                                 </StackPanel>
                             </StackPanel>
-                          
-                            <Button Margin="0,30,0,0" Background="LightYellow"  Height="40" Width="200"  FontSize="16" Content="Save compressed file" Click="SaveCompressedFile"/>
+
+                            <Button x:Name="SaveFileCompress" IsEnabled="False" Margin="0,30,0,0" Background="LightYellow"  Height="40" Width="200"  FontSize="16" Content="Save compressed file" Click="SaveCompressedFile"/>
                         </StackPanel>
                         <StackPanel Width="550" Margin="10,0,0,0">
                             <StackPanel>
@@ -251,7 +251,7 @@
                                         </Label>
                                     </StackPanel>
                                 </StackPanel>
-                                <Button Margin="0,30,0,0" Background="LightYellow" Height="40" Width="200"  FontSize="16" Content="Save decompressed file" Click="SaveDecompressedFile"/>
+                                <Button x:Name="SaveFileDecompress" IsEnabled="False"  Margin="0,30,0,0" Background="LightYellow" Height="40" Width="200"  FontSize="16" Content="Save decompressed file" Click="SaveDecompressedFile"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

@@ -181,14 +181,12 @@ namespace Lossless
                     {
                         UpdateEvent.Invoke(i, inputSize);
                     }
-                }
-                else if(i == inputSize-1)
-                {
-                    if (CompleteEvent != null)
-                    {
-                        CompleteEvent.Invoke();
-                    }
-                }   
+                }  
+            }
+
+            if (CompleteEvent != null)
+            {
+                CompleteEvent.Invoke();
             }
 
             totalBytes = stream.Index;
