@@ -117,7 +117,7 @@ namespace Lossless
                         node = node.ChildA;
                 }
 
-                if (i % (outputSize / 100) == 0)
+                if (i % ((outputSize / 100)+1) == 0)
                 {
                     if (UpdateEvent != null)
                     {

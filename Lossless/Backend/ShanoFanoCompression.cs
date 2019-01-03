@@ -175,7 +175,7 @@ namespace Lossless
                 symbol = input[i];
                 writeBits(ref stream, sym[symbol].Code, sym[symbol].Bits);
 
-                if (i % (inputSize / 100) == 0)
+                if (i % ((inputSize / 100)+1) == 0)
                 {
                     if (UpdateEvent != null)
                     {
