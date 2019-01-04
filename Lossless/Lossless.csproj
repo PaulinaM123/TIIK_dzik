@@ -73,10 +73,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Backend\BitStream.cs" />
-    <Compile Include="Backend\ShanoFanoCompression.cs" />
-    <Compile Include="Backend\ShanoFanoDecompression.cs" />
+    <Compile Include="Backend\SFCompression.cs" />
+    <Compile Include="Backend\SFDecompression.cs" />
     <Compile Include="Backend\Symbol.cs" />
-    <Compile Include="Backend\TreeNode.cs" />
     <Page Include="DiagramWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

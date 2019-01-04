@@ -17,22 +17,31 @@ namespace Lossless
         private byte[] __CompressedFile;
         private byte[] _FileToDecompress;
         private byte[] __DecompressedFile;
-        private ShanoFanoCompression _SFCompression;
-        private ShanoFanoDecompression _SFDecompression;
+        private SFCompression _SFCompression;
+        private SFDecompression _SFDecompression;
 
         public MainWindow()
         {
             InitializeComponent();
+            CreateAndSetupSFInstances();
+        }
 
-            _SFCompression = new ShanoFanoCompression();
+        #region configuration
+
+        private void CreateAndSetupSFInstances()
+        {
+            _SFCompression = new SFCompression();
             _SFCompression.UpdateEvent += CompressLoading;
             _SFCompression.CompleteEvent += CompressComplete;
 
-            _SFDecompression = new ShanoFanoDecompression();
+            _SFDecompression = new SFDecompression();
             _SFDecompression.UpdateEvent += DecompressLoading;
             _SFDecompression.CompleteEvent += DecompressComplete;
-
         }
+
+        #endregion
+
+        #region windowFunctions
 
         private void LoadFileStatisticView(object sender, RoutedEventArgs e)
         {
@@ -63,7 +72,14 @@ namespace Lossless
             entropy.Text= Helpers.Entropy(loaded_text.Text).ToString(); 
         }
 
+        private void ShowChart(object sender, RoutedEventArgs e)
+        {
+            if (diagramWindow != null) diagramWindow.Close();
+            diagramWindow = new DiagramWindow(loaded_text.Text);
+            diagramWindow.Show();
+        }
 
+        #endregion
 
         private void CompressFile(object sender, RoutedEventArgs e)
         {
@@ -175,16 +191,7 @@ namespace Lossless
 
         #endregion
 
-
-        //private void SearchCollisionLoading(int counter, int max)
-        //{
-        //    Dispatcher.Invoke(() =>
-        //    {
-        //        var percents = ((counter * 100) / max);
-        //        findCollisionLoading.Value = percents;
-        //        findCollisionLabel.Content = percents + "% " + searchedFiles + "/" + filesToSearchCollision;
-        //    });
-        //}
+        #region events
 
         private void CompressLoading(uint counter, uint max)
         {
@@ -226,15 +233,10 @@ namespace Lossless
             });
         }
 
+        #endregion
 
-        public void ShowChart(object sender, RoutedEventArgs e)
-        {
-            if (diagramWindow != null) diagramWindow.Close();
-            diagramWindow = new DiagramWindow(loaded_text.Text);
-            diagramWindow.Show();
-        }
+        #region LoadingsToLists
 
-        //Add To List
         private void AddToListFileToCompress(string FileName, string FileSize)
         {
             FilesToCompress.ItemsSource = new List<FileDto>() {
@@ -247,5 +249,7 @@ namespace Lossless
                  new FileDto() { Name = FileName, Size = FileSize }
             };
         }
+
+        #endregion
     }
 }

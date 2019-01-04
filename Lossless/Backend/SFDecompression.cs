@@ -3,7 +3,7 @@ using System;
 
 namespace Lossless
 {
-    class ShanoFanoDecompression
+    class SFDecompression
     {
         public delegate void UpdateStep(uint counter, uint max);
         public delegate void CompleteStep();

@@ -3,18 +3,12 @@ using System;
 
 namespace Lossless
 {
-    class ShanoFanoCompression
+    class SFCompression
     {
         public delegate void UpdateStep(uint counter, uint max);
         public delegate void CompleteStep();
         public event UpdateStep UpdateEvent;
         public event CompleteStep CompleteEvent;
-
-        private  void initBitStream(ref BitStream stream, byte[] buffer)
-        {
-            stream.BytePointer = buffer;
-            stream.BitPosition = 0;
-        }
 
         private  void writeBits(ref BitStream stream, uint x, uint bits)
         {
@@ -41,25 +35,26 @@ namespace Lossless
         private  void histogram(byte[] input, Symbol[] sym, uint size)
         {
             Symbol temp;
-            int i, swaps;
-            int index = 0;
+            uint i;
+            bool swaps;
+            uint index = 0;
 
+            //fillinf symbols table with "indexes" - Sym
             for (i = 0; i < 256; ++i)
             {
-                sym[i].Sym = (uint)i;
-                sym[i].Count = 0;
-                sym[i].Code = 0;
-                sym[i].Bits = 0;
+                sym[i].Sym = i;
             }
 
-            for (i = (int)size; Convert.ToBoolean(i); --i, ++index)
+            //counting symbols in input
+            for (i = size; Convert.ToBoolean(i); i--, index++)
             {
                 sym[input[index]].Count++;
             }
 
+            //Bubble sort descending
             do
             {
-                swaps = 0;
+                swaps = false;
 
                 for (i = 0; i < 255; ++i)
                 {
@@ -68,10 +63,10 @@ namespace Lossless
                         temp = sym[i];
                         sym[i] = sym[i + 1];
                         sym[i + 1] = temp;
-                        swaps = 1;
+                        swaps = true;
                     }
                 }
-            } while (Convert.ToBoolean(swaps));
+            } while (swaps);
         }
 
         private  void makeTree(Symbol[] sym, ref BitStream stream, uint code, uint bits, uint first, uint last)
@@ -144,9 +139,13 @@ namespace Lossless
             if (inputSize < 1)
                 return 0;
 
-            initBitStream(ref stream, output);
+            stream.BytePointer = output;
+            stream.BitPosition = 0;
+
+            //sym = symbols descending by count in inputSize
             histogram(input, sym, inputSize);
 
+            //check lastSymbol index
             for (lastSymbol = 255; sym[lastSymbol].Count == 0; --lastSymbol) ;
 
             if (lastSymbol == 0)
