@@ -10,21 +10,7 @@ namespace Lossless
         public event UpdateStep UpdateEvent;
         public event CompleteStep CompleteEvent;
 
-
         private const int MAX_TREE_NODES = 511;
-
-        public class TreeNode
-        {
-            public TreeNode ChildA;
-            public TreeNode ChildB;
-            public int Symbol;
-        }
-
-        private  void initBitStream(ref BitStream stream, byte[] buffer)
-        {
-            stream.BytePointer = buffer;
-            stream.BitPosition = 0;
-        }
 
         private  uint readBit(ref BitStream stream)
         {
@@ -99,7 +85,8 @@ namespace Lossless
 
             if (inputSize < 1) return;
 
-            initBitStream(ref stream, input);
+            stream.BytePointer = input;
+            stream.BitPosition = 0;
 
             nodeCount = 0;
             root = recoverTree(nodes, ref stream, ref nodeCount);
