@@ -127,7 +127,7 @@
                             </Grid>
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" >
-                                    <Label FontSize="16" Width="200">
+                                    <Label FontSize="16" Width="230">
                                         File size before compression:
                                     </Label>
                                     <Label x:Name="c_SizeBeforeCompression" FontSize="16" >
@@ -135,7 +135,7 @@
                                     </Label>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label FontSize="16" Width="200">
+                                    <Label FontSize="16" Width="230">
                                         File size after compression:
                                     </Label>
                                     <Label x:Name="c_SizeAfterCompression" FontSize="16">
@@ -143,7 +143,7 @@
                                     </Label>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label FontSize="16" Width="200">
+                                    <Label FontSize="16" Width="230">
                                         Degree of compression:
                                     </Label>
                                     <Label x:Name="c_CompressionDegree" FontSize="16">
@@ -151,7 +151,7 @@
                                     </Label>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label FontSize="16" Width="200">
+                                    <Label FontSize="16" Width="230">
                                         Compression Time
                                     </Label>
                                     <Label x:Name="c_CompressionTime" FontSize="16">
@@ -219,7 +219,7 @@
                                 </Grid>
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal" >
-                                        <Label FontSize="16" Width="200">
+                                        <Label FontSize="16" Width="230">
                                             File size before decompression:
                                         </Label>
                                         <Label x:Name="d_SizeBeforeDecompression" FontSize="16" >
@@ -227,7 +227,7 @@
                                         </Label>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <Label FontSize="16" Width="200">
+                                        <Label FontSize="16" Width="230">
                                             File size after decompression:
                                         </Label>
                                         <Label x:Name="d_SizeAfterDecompression" FontSize="16">
@@ -235,7 +235,7 @@
                                         </Label>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <Label FontSize="16" Width="200">
+                                        <Label FontSize="16" Width="230">
                                             Degree of decompression:
                                         </Label>
                                         <Label x:Name="d_DecompressionDegree" FontSize="16">
@@ -243,7 +243,7 @@
                                         </Label>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <Label FontSize="16" Width="200">
+                                        <Label FontSize="16" Width="230">
                                             Decompression Time
                                         </Label>
                                         <Label x:Name="d_DecompressionTime" FontSize="16">

@@ -76,6 +76,7 @@
     <Compile Include="Backend\MemoryStreamExtensions.cs" />
     <Compile Include="Backend\SFCompression.cs" />
     <Compile Include="Backend\SFDecompression.cs" />
+    <Compile Include="Backend\StopReadingException.cs" />
     <Compile Include="Backend\Symbol.cs" />
     <Page Include="DiagramWindow.xaml">
       <SubType>Designer</SubType>
@@ -133,12 +134,17 @@
   <ItemGroup>
     <Resource Include="Images\logo.ico" />
     <Resource Include="Images\file.png" />
+    <Resource Include="Examples\logo\logo.ico" />
+    <Resource Include="Examples\aaaaaaaabbbbccdd\file.txt" />
     <Content Include="packages\System.Windows.Controls.DataVisualization.Toolkit.4.0.0.0\lib\net40-Client\System.Windows.Controls.DataVisualization.Toolkit.dll" />
     <Resource Include="packages\System.Windows.Controls.DataVisualization.Toolkit.4.0.0.0\lib\net40-Client\System.Windows.Controls.DataVisualization.Toolkit.XML" />
     <Content Include="packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Input.Toolkit.dll" />
     <Content Include="packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Layout.Toolkit.dll" />
     <Content Include="packages\WPFToolkit.3.5.50211.1\lib\WPFToolkit.dll" />
     <Content Include="packages\WPFToolkit.DataVisualization.3.5.50211.1\lib\System.Windows.Controls.DataVisualization.Toolkit.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Examples\bigOne\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -23,7 +23,7 @@ namespace Lossless
         public MainWindow()
         {
             InitializeComponent();
-            CreateAndSetupSFInstances();
+            CreateAndSetupSFInstances();       
         }
 
         #region configuration
@@ -89,7 +89,7 @@ namespace Lossless
             }
             else
             {
-                byte[] compressedData = new byte[(uint)_FileToCompress.Length * (101 / 100) + 384];
+                byte[] compressedData = new byte[(uint)_FileToCompress.Length * 2];
                
                 Task.Run(() => {
 
@@ -98,7 +98,7 @@ namespace Lossless
                     int compressedSize = _SFCompression.Compress(_FileToCompress, compressedData, (uint)_FileToCompress.Length);
                     sw.Stop();
                     __CompressedFile = new byte[compressedSize];
-                    Array.Copy(compressedData, __CompressedFile, (compressedSize - 1));
+                    Array.Copy(compressedData, __CompressedFile, compressedSize);
 
                     Dispatcher.Invoke(() => {
                         c_CompressionTime.Content = sw.ElapsedMilliseconds + "ms";
@@ -121,15 +121,15 @@ namespace Lossless
                 Task.Run(() => {
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
-                    try
-                    {
-                        __DecompressedFile = _SFDecompression.Decompress(_FileToDecompress);
-                    }
-                    catch(Exception exception)
-                    {
-                        Console.WriteLine("Error in Decompression:");
-                        Console.WriteLine(exception.Message);
-                    }
+                    //try
+                    //{
+                        __DecompressedFile = _SFDecompression.Decompress(_FileToDecompress); 
+                    //}
+                    //catch(Exception exception)
+                    //{
+                    //    Console.WriteLine("Error in Decompression:");
+                    //    Console.WriteLine(exception.Message);
+                    //}
                     sw.Stop();
                     if(__DecompressedFile != null)
                     {
