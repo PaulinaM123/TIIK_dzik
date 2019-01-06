@@ -137,7 +137,7 @@ namespace Lossless
            
                 if (stop) break;
 
-                if (indexer % ((stream.BytePointer.Length * 8 / 100)+1) == 0)
+                if (indexer % ((stream.BytePointer.Length * 8 / 1000)+1) == 0)
                 {
                     if (UpdateEvent != null)
                     {

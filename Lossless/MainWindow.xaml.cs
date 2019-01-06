@@ -121,15 +121,7 @@ namespace Lossless
                 Task.Run(() => {
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
-                    //try
-                    //{
-                        __DecompressedFile = _SFDecompression.Decompress(_FileToDecompress); 
-                    //}
-                    //catch(Exception exception)
-                    //{
-                    //    Console.WriteLine("Error in Decompression:");
-                    //    Console.WriteLine(exception.Message);
-                    //}
+                    __DecompressedFile = _SFDecompression.Decompress(_FileToDecompress); 
                     sw.Stop();
                     if(__DecompressedFile != null)
                     {
