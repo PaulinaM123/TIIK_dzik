@@ -121,15 +121,25 @@ namespace Lossless
                 Task.Run(() => {
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
-                    __DecompressedFile =  _SFDecompression.Decompress(_FileToDecompress);
+                    try
+                    {
+                        __DecompressedFile = _SFDecompression.Decompress(_FileToDecompress);
+                    }
+                    catch(Exception exception)
+                    {
+                        Console.WriteLine("Error in Decompression:");
+                        Console.WriteLine(exception.Message);
+                    }
                     sw.Stop();
-
-                    Dispatcher.Invoke(() => {
-                        d_SizeBeforeDecompression.Content = _FileToDecompress.Length + " bytes";
-                        d_SizeAfterDecompression.Content = __DecompressedFile.Length + " bytes";
-                        d_DecompressionTime.Content = sw.ElapsedMilliseconds + "ms";
-                        d_DecompressionDegree.Content = (float)_FileToDecompress.Length / (float)__DecompressedFile.Length;
-                    });
+                    if(__DecompressedFile != null)
+                    {
+                        Dispatcher.Invoke(() => {
+                            d_SizeBeforeDecompression.Content = _FileToDecompress.Length + " bytes";
+                            d_SizeAfterDecompression.Content = __DecompressedFile.Length + " bytes";
+                            d_DecompressionTime.Content = sw.ElapsedMilliseconds + "ms";
+                            d_DecompressionDegree.Content = (float)_FileToDecompress.Length / (float)__DecompressedFile.Length;
+                        });
+                    }
                 });
             }
         }
@@ -192,11 +202,11 @@ namespace Lossless
 
         #region events
 
-        private void CompressLoading(uint counter, uint max)
+        private void CompressLoading(float counter, float max)
         {
             Dispatcher.Invoke(() =>
             {
-                var percents = ((counter * 100) / max);
+                var percents = (int)((counter * 100) / max);
                 CompressionProgressBar.Value = percents;
                 CompressionProgressBarLabel.Content = percents + "% ";
             });
@@ -212,11 +222,11 @@ namespace Lossless
             });
         }
 
-        private void DecompressLoading(uint counter, uint max)
+        private void DecompressLoading(float counter, float max)
         {
             Dispatcher.Invoke(() =>
             {
-                var percents = ((counter * 100) / max);
+                var percents = (int)((counter * 100) / max);
                 DecompressionProgressBar.Value = percents;
                 DecompressionProgressBarLabel.Content = percents + "% ";
             });
