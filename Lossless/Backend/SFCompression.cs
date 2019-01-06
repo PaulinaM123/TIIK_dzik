@@ -5,7 +5,7 @@ namespace Lossless
 {
     class SFCompression
     {
-        public delegate void UpdateStep(uint counter, uint max);
+        public delegate void UpdateStep(float counter, float max);
         public delegate void CompleteStep();
         public event UpdateStep UpdateEvent;
         public event CompleteStep CompleteEvent;
