@@ -73,6 +73,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Backend\BitStream.cs" />
+    <Compile Include="Backend\MemoryStreamExtensions.cs" />
     <Compile Include="Backend\SFCompression.cs" />
     <Compile Include="Backend\SFDecompression.cs" />
     <Compile Include="Backend\Symbol.cs" />
@@ -89,6 +90,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Backend\Helpers.cs" />
+    <Compile Include="Backend\TreeNode.cs" />
     <Compile Include="DiagramWindow.xaml.cs">
       <DependentUpon>DiagramWindow.xaml</DependentUpon>
     </Compile>

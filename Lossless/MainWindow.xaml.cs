@@ -119,10 +119,9 @@ namespace Lossless
             else
             {
                 Task.Run(() => {
-                    __DecompressedFile = new byte[25480636];// (uint)_FileToDecompress.Length * (101 / 100) + 384];// 25480636];
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
-                    _SFDecompression.Decompress(_FileToDecompress, __DecompressedFile, (uint)_FileToDecompress.Length, (uint)__DecompressedFile.Length);
+                    __DecompressedFile =  _SFDecompression.Decompress(_FileToDecompress);
                     sw.Stop();
 
                     Dispatcher.Invoke(() => {

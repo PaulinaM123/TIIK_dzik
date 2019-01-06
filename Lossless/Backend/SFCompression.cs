@@ -39,7 +39,7 @@ namespace Lossless
             bool swaps;
             uint index = 0;
 
-            //fillinf symbols table with "indexes" - Sym
+            //fill symbols table with "indexes" - Sym
             for (i = 0; i < 256; ++i)
             {
                 sym[i].Sym = i;
