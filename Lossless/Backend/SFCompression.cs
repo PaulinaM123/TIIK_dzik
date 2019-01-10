@@ -153,6 +153,13 @@ namespace Lossless
 
             makeTree(sym, ref stream, 0, 0, 0, lastSymbol);
 
+            uint suma = 0;
+            foreach (var item in sym)
+            {
+                suma += item.Bits;
+            }
+            float srednia = (float)suma / (float)(lastSymbol + 1);
+
             do
             {
                 swaps = 0;
